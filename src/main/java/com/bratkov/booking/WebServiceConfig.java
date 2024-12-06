@@ -25,7 +25,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     }
 
     @Bean(name = "bookings")
-    public DefaultWsdl11Definition defaultWsdl11Definition(@Qualifier("bookingSchema") XsdSchema bookingsSchema) {
+    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema bookingsSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("BookingsPort");
         wsdl11Definition.setLocationUri("/ws");
@@ -34,23 +34,8 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return wsdl11Definition;
     }
 
-    @Bean(name = "flights")
-    public DefaultWsdl11Definition flightsWsdl11Definition(@Qualifier("flightSchema") XsdSchema flightSchema) {
-        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-        wsdl11Definition.setPortTypeName("FlightsPort");
-        wsdl11Definition.setLocationUri("/ws");
-        wsdl11Definition.setTargetNamespace("https://lab.com/flight");
-        wsdl11Definition.setSchema(flightSchema);
-        return wsdl11Definition;
-    }
-
     @Bean
     public XsdSchema bookingSchema() {
         return new SimpleXsdSchema(new ClassPathResource("booking.xsd"));
-    }
-
-    @Bean
-    public XsdSchema flightSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("flight.xsd"));
     }
 }

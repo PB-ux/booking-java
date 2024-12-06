@@ -72,8 +72,6 @@
                 <configuration>
                     <sources>
                         <source>${project.basedir}/src/main/resources/booking.xsd</source>
-                        <source>${project.basedir}/src/main/resources/flight.xsd</source>
-<!--                        <source>${project.basedir}/src/main/resources/payment.xsd</source>-->
                     </sources>
                 </configuration>
             </plugin>
