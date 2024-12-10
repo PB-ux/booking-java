@@ -6,9 +6,9 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import com.lab.booking.Booking;
-import com.lab.booking.CreateBookingResponse;
-import com.lab.booking.CreateBookingRequest;
+import com.lab.booking.*;
+
+import java.util.Arrays;
 
 @Endpoint
 public class BookingEndpoint {
@@ -21,14 +21,23 @@ public class BookingEndpoint {
         this.bookingRepository = bookingRepository;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "createBookingRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getBookingsRequest")
     @ResponsePayload
-    public CreateBookingResponse createBooking(@RequestPayload CreateBookingRequest request) {
-        CreateBookingResponse response = new CreateBookingResponse();
-        Booking newBooking = bookingRepository.create(request.getFirstName(), request.getLastName(), request.getFlightId());
-        response.setBooking(newBooking);
+    public GetBookingsResponse getBooking(@RequestPayload GetBookingsRequest request) {
+        GetBookingsResponse response = new GetBookingsResponse();
+        Booking[] bookings = bookingRepository.getBookings();
+        response.getBooking().addAll(Arrays.asList(bookings));
 
         return response;
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "cancelBookingRequest")
+    @ResponsePayload
+    public CancelBookingResponse getBooking(@RequestPayload CancelBookingRequest request) {
+        CancelBookingResponse response = new CancelBookingResponse();
+        Booking booking = bookingRepository.cancelBooking(1);
+        response.setBooking(booking);
+
+        return response;
+    }
 }
