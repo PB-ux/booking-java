@@ -23,7 +23,7 @@ public class BookingEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getBookingsRequest")
     @ResponsePayload
-    public GetBookingsResponse getBooking(@RequestPayload GetBookingsRequest request) {
+    public GetBookingsResponse getBookings(@RequestPayload GetBookingsRequest request) {
         GetBookingsResponse response = new GetBookingsResponse();
         Booking[] bookings = bookingRepository.getBookings();
         response.getBooking().addAll(Arrays.asList(bookings));
@@ -33,7 +33,7 @@ public class BookingEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "cancelBookingRequest")
     @ResponsePayload
-    public CancelBookingResponse getBooking(@RequestPayload CancelBookingRequest request) {
+    public CancelBookingResponse cancelBooking(@RequestPayload CancelBookingRequest request) {
         CancelBookingResponse response = new CancelBookingResponse();
         Booking booking = bookingRepository.cancelBooking(1);
         response.setBooking(booking);
