@@ -9,6 +9,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import com.lab.booking.*;
 
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 
 @Endpoint
 public class BookingEndpoint {
@@ -35,9 +36,20 @@ public class BookingEndpoint {
     @ResponsePayload
     public CancelBookingResponse cancelBooking(@RequestPayload CancelBookingRequest request) {
         CancelBookingResponse response = new CancelBookingResponse();
-        Booking booking = bookingRepository.cancelBooking(1);
+        Booking booking = bookingRepository.cancelBooking(request.getBookingId());
         response.setBooking(booking);
 
         return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "cancelBookingAsyncRequest")
+    @ResponsePayload
+    public CompletableFuture<CancelBookingResponse> cancelBookingAsync(@RequestPayload CancelBookingRequest request) {
+        return CompletableFuture.supplyAsync(() -> {
+            CancelBookingResponse response = new CancelBookingResponse();
+            Booking booking = bookingRepository.cancelBooking(request.getBookingId());
+            response.setBooking(booking);
+            return response;
+        });
     }
 }

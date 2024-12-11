@@ -49,4 +49,29 @@
             <xs:enumeration value="CANCELED"/>
         </xs:restriction>
     </xs:simpleType>
+
+    <xs:element name="cancelBookingAsyncRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bookingId" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="cancelBookingAsyncResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="tns:asyncStatus"/>
+                <xs:element name="bookingId" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="asyncStatus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="PENDING"/>
+            <xs:enumeration value="COMPLETED"/>
+            <xs:enumeration value="FAILED"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>
